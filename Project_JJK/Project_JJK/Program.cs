@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Nancy.Hosting.Self;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using System.Xml;
 
 namespace Project_JJK
 {
@@ -28,18 +29,27 @@ namespace Project_JJK
 
         public static void Insert()
         {
+            XmlDocument x = new XmlDocument();
+            x.Load("Project_JJK\\Connection Info.xml\\");
+            XmlNodeList Servers = x.GetElementsByTagName("Server");
+            XmlNodeList UserIDs = x.GetElementsByTagName("UserID");
+            XmlNodeList Passwords = x.GetElementsByTagName("Password");
+            XmlNodeList Databases = x.GetElementsByTagName("Database");
+            XmlNodeList CharacterSets = x.GetElementsByTagName("CharacterSet");
+
             var connBuilder = new MySqlConnectionStringBuilder();
-            connBuilder.Server = "hellojkw.com";
-            connBuilder.UserID = "kown8447";
-            connBuilder.Password = "kown8447";
-            connBuilder.Database = "Project_JJK";
-            connBuilder.CharacterSet = "utf8";
+            connBuilder.Server = Servers[0].InnerText;
+            connBuilder.UserID = UserIDs[0].InnerText;
+            connBuilder.Password = Passwords[0].InnerText;
+            connBuilder.Database = Databases[0].InnerText;
+            connBuilder.CharacterSet = CharacterSets[0].InnerText;
             string strconn = connBuilder.ToString();
 
+            
             using (MySqlConnection conn = new MySqlConnection(strconn))
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO test1 VALUES (20, '뭐')", conn);
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO test1 VALUES (25, '보안체크')", conn);
                 cmd.ExecuteNonQuery();
             }
         }
