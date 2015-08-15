@@ -14,44 +14,53 @@ namespace Project_JJK
     {
         static void Main(string[] args)
         {
-            Insert();
 
-  			// Nancy는 WebServer!!
-			// 음 그러니까 웹로 접속 할 수 있는 뭔가를 만들겠다는 뜻!
-			// https://ko.wikipedia.org/wiki/웹_서버
-			using (var host = new NancyHost(new Uri("http://localhost:80")))
-			{
-				host.Start(); // 시작한다.
-				Console.WriteLine("Start server.");
-				Console.ReadLine(); // 이거 안해주면 host가 그냥 끝나버린다.
-			}
+            if (DBConnection() == true)
+           {
+               // Nancy는 WebServer!!
+               // 음 그러니까 웹로 접속 할 수 있는 뭔가를 만들겠다는 뜻!
+               // https://ko.wikipedia.org/wiki/웹_서버
+               using (var host = new NancyHost(new Uri("http://localhost:80")))
+               {
+                   host.Start(); // 시작한다.
+                   Console.WriteLine("Start server.");
+                   Console.ReadLine(); // 이거 안해주면 host가 그냥 끝나버린다.
+               }
+           }
+           else
+               Console.WriteLine("DB 접속 실패!");  			
         }
 
-        public static void Insert()
+        public static bool DBConnection()
         {
+    
             XmlDocument x = new XmlDocument();
             x.Load("Project_JJK\\Connection Info.xml\\");
-            XmlNodeList Servers = x.GetElementsByTagName("Server");
-            XmlNodeList UserIDs = x.GetElementsByTagName("UserID");
-            XmlNodeList Passwords = x.GetElementsByTagName("Password");
-            XmlNodeList Databases = x.GetElementsByTagName("Database");
-            XmlNodeList CharacterSets = x.GetElementsByTagName("CharacterSet");
 
             var connBuilder = new MySqlConnectionStringBuilder();
-            connBuilder.Server = Servers[0].InnerText;
-            connBuilder.UserID = UserIDs[0].InnerText;
-            connBuilder.Password = Passwords[0].InnerText;
-            connBuilder.Database = Databases[0].InnerText;
-            connBuilder.CharacterSet = CharacterSets[0].InnerText;
+            connBuilder.Server = x.GetElementsByTagName("Server")[0].InnerText;
+            connBuilder.UserID = x.GetElementsByTagName("UserID")[0].InnerText;
+            connBuilder.Password = x.GetElementsByTagName("Password")[0].InnerText;
+            connBuilder.Database = x.GetElementsByTagName("Database")[0].InnerText;
+            connBuilder.CharacterSet = x.GetElementsByTagName("CharacterSet")[0].InnerText;
             string strconn = connBuilder.ToString();
 
-            
-            using (MySqlConnection conn = new MySqlConnection(strconn))
+            try
             {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO test1 VALUES (25, '보안체크')", conn);
-                cmd.ExecuteNonQuery();
+                using (MySqlConnection conn = new MySqlConnection(strconn))
+                {
+                    conn.Open();
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO test1 VALUES (30, '예외처리')", conn);
+                    cmd.ExecuteNonQuery();
+                }
+
+                return true;
             }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return false;
+            }            
         }
     }
 }
