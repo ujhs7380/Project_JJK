@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Nancy.Hosting.Self;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
-using System.Xml;
+using System.Xml.Linq;
 
 namespace Project_JJK
 {
@@ -33,16 +33,15 @@ namespace Project_JJK
 
         public static bool DBConnection()
         {
-    
-            XmlDocument x = new XmlDocument();
-            x.Load("Project_JJK\\Connection Info.xml\\");
+
+            XDocument x = XDocument.Load("Project_JJK\\Connection Info.xml\\");
 
             var connBuilder = new MySqlConnectionStringBuilder();
-            connBuilder.Server = x.GetElementsByTagName("Server")[0].InnerText;
-            connBuilder.UserID = x.GetElementsByTagName("UserID")[0].InnerText;
-            connBuilder.Password = x.GetElementsByTagName("Password")[0].InnerText;
-            connBuilder.Database = x.GetElementsByTagName("Database")[0].InnerText;
-            connBuilder.CharacterSet = x.GetElementsByTagName("CharacterSet")[0].InnerText;
+            connBuilder.Server = x.Descendants("Server").ElementAt(0).Value;
+            connBuilder.UserID = x.Descendants("UserID").ElementAt(0).Value;
+            connBuilder.Password = x.Descendants("Password").ElementAt(0).Value;
+            connBuilder.Database = x.Descendants("Database").ElementAt(0).Value;
+            connBuilder.CharacterSet = x.Descendants("CharacterSet").ElementAt(0).Value;
             string strconn = connBuilder.ToString();
 
             try
