@@ -43,21 +43,20 @@ namespace Project_JJK
             connBuilder.Database = x.Descendants("Database").ElementAt(0).Value;
             connBuilder.CharacterSet = x.Descendants("CharacterSet").ElementAt(0).Value;
             string strconn = connBuilder.ToString();
+            MySqlConnection conn = new MySqlConnection(strconn);
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(strconn))
-                {
-                    conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("INSERT INTO test1 VALUES (30, '예외처리')", conn);
-                    cmd.ExecuteNonQuery();
-                }
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("INSERT INTO test1 VALUES (30, '예외처리')", conn);
+                cmd.ExecuteNonQuery();
 
                 return true;
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
+                conn.Close();
                 return false;
             }            
         }
