@@ -10,7 +10,5 @@ namespace Project_JJK
 	{
 		public static void AddDesigner(string name, string phone, string address, string picture)
 		{ }
-
-		
 	}
 }

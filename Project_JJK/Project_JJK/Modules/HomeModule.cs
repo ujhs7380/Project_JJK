@@ -23,17 +23,6 @@ namespace Project_JJK.Modules
 			{
 				return View["home"];
 			};
-			Get["Test"] = _ =>
-			{
-				return View["Test"];
-			};
-
-			Post["/designer"] = _ =>
-			{
-				string designerName = Request.Query["designerName"];
-
-				//Designer.AddDesigner();
-			};
 		}
 	}
 }
