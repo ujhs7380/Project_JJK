@@ -19,6 +19,10 @@
 			<input type="text" id="phone" />
 		</p>
 		<p>
+			<span>사진</span>
+			<input type="text" id="picture" />
+		</p>
+		<p>
 			<button id="btn-add-designer">추가</button>
 		</p>
 	</div>
@@ -32,7 +36,8 @@
 				$.post('/designer/add',
 				{
 					name: $('#name').val(),
-					phone: $('#phone').val()
+					phone: $('#phone').val(),
+					picture: $('#picture').val()
 				},
 				function (data, status, xhr) {
 					alert(data + ', ' + status);

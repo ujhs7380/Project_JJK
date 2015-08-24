@@ -8,7 +8,7 @@ namespace Project_JJK
 {
 	public static class Designer
 	{
-		public static void AddDesigner(string name, string phone, string address, string picture)
+		public static void AddDesigner(string name, string phone, string picture)
 		{ }
 	}
 }

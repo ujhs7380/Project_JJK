@@ -20,6 +20,7 @@ namespace Project_JJK.Modules
 			{
 				string name = Request.Form["name"];
 				string phone = Request.Form["phone"];
+				string picture = Request.Form["picture"];
 
 				Console.WriteLine("Add Designer: {0}, {1}", name, phone);
 
