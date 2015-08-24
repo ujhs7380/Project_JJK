@@ -34,7 +34,7 @@ namespace Project_JJK.Utils
 				try
 				{
 					conn.Open();
-					MySqlCommand cmd = new MySqlCommand("INSERT INTO test1 VALUES(30, '예외처리')", conn);
+					MySqlCommand cmd = new MySqlCommand("INSERT INTO LogServerStart (startTime, machineName, userName) VALUES(now(), '" + Environment.MachineName + "', '" + Environment.UserName + "')", conn);
 					cmd.ExecuteNonQuery();
 
 					return true;
