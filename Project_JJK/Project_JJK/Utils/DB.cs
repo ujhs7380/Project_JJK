@@ -16,12 +16,14 @@ namespace Project_JJK.Utils
 		{
 			XDocument xdoc = XDocument.Load(@"Project_JJK\DBConnectionInfo.xml");
 
-			var connBuilder = new MySqlConnectionStringBuilder();
-			connBuilder.Server = xdoc.Descendants("Server").ElementAt(0).Value;
-			connBuilder.UserID = xdoc.Descendants("UserID").ElementAt(0).Value;
-			connBuilder.Password = xdoc.Descendants("Password").ElementAt(0).Value;
-			connBuilder.Database = xdoc.Descendants("Database").ElementAt(0).Value;
-			connBuilder.CharacterSet = xdoc.Descendants("CharacterSet").ElementAt(0).Value;
+			var connBuilder = new MySqlConnectionStringBuilder
+			{
+				Server = xdoc.Descendants("Server").ElementAt(0).Value,
+				UserID = xdoc.Descendants("UserID").ElementAt(0).Value,
+				Password = xdoc.Descendants("Password").ElementAt(0).Value,
+				Database = xdoc.Descendants("Database").ElementAt(0).Value,
+				CharacterSet = xdoc.Descendants("CharacterSet").ElementAt(0).Value,
+			};
 			_connectionString = connBuilder.ToString();
 		}
 
