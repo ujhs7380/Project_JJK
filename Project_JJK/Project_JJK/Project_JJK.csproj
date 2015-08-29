@@ -77,6 +77,7 @@
     <None Include="Statics\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <None Include="Statics\bootstrap\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Statics\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Views\product-add.cshtml" />
     <None Include="Views\home.cshtml" />
     <None Include="Views\designer-list.cshtml" />
     <None Include="Views\designer-add.cshtml" />
