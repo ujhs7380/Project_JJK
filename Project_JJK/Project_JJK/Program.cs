@@ -10,6 +10,8 @@ using System.Xml.Linq;
 using Project_JJK.Utils;
 using Nancy;
 using Nancy.Conventions;
+using Nancy.TinyIoc;
+using Nancy.Bootstrapper;
 
 namespace Project_JJK
 {
@@ -42,6 +44,15 @@ namespace Project_JJK
 			nancyConventions.StaticContentsConventions.Clear();
 
 			nancyConventions.StaticContentsConventions.AddDirectory("Statics", "Statics");
+		}
+
+		protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+		{
+			base.ApplicationStartup(container, pipelines);
+			this.Conventions.ViewLocationConventions.Add((viewName, model, context) =>
+			{ return string.Concat("Views/sample/", viewName); });
+			this.Conventions.ViewLocationConventions.Add((viewName, model, context) =>
+			{ return string.Concat("Views/", viewName); });
 		}
 	}
 }
